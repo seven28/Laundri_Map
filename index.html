@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Laundri-Map | Pocket Laundry Assistant</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
+<link rel="stylesheet" href="mystyles.css" type="text/css" />
+<link href="favicon.ico" rel="shortcut icon" />
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+<script type="text/javascript" src="wColorPicker.js"></script>
+    <script type="text/javascript">
+        function dropHider(type) {
+            $("select#drop").find("option").each(function() {
+                if ($(this).attr("rel") == type) {
+                    $(this).removeAttr("disabled");
+                } else {
+                    $(this).attr("disabled","disabled");
+                }
+            });
+        }
+    </script>
+<style>
+.ui-dialog-contain {
+	width: 92.5%;
+	max-width: 500px;
+	margin: 10% auto 15px auto;
+	padding: 0;
+	position: relative;
+	top: -15px;
+}
+.hoverBox{
+float:left;
+margin: 10px;
+padding: 20px;
+border: solid #CACACA 1px;
+}
+     .ui-selectmenu {
+       padding : 15px;
+     }
+     .ui-li-divider.ui-bar-b {
+       color : red;
+       background : black;
+     }
+     .ui-li:not(.ui-li-divider) {
+       font-style : italic;
+     }
+     .ui-li.ui-btn-active {
+       color : white;
+       background : grey;
+     }
+  </style>
+</style>
+</head>
+<body>
+
+<div id="signin" data-role="dialog" data-title="Welcome" width="500">
+<div class="profile" align="center" style="background-color:#000000;">
+<img src="images/lmname.gif" width="500" height="162" />
+<img src="images/LM_logo_trademark.gif" width="400" height="400" align="center" />
+</div>
+<div class="globallinkbars" data-role="controlgroup">
+       <a href="#home" data-transition="fade" data-role="button" data-icon="home" style="background:#fffb93;color:#000000;font-weight:normal;">ENTER THE DEMO</a>
+<a href="laundrimap.html" target="_blank" data-transition="fade" data-role="button" data-icon="home" style="background:#88e78e;color:#000000;font-weight:normal;">ABOUT THE APP</a>
+  <a href="testing_survey.html" target="_blank" data-transition="fade" data-role="button" data-icon="star" style="background:#78a8c0;color:#000000;font-weight:normal;">SHARE YOUR FEEDBACK</a>
+	</div></div>
+</div>
+
+	<div id="home" data-role="page" data-title="Home" style="width:1440px;padding-right:15px;">
+	<div data-role="header" style="width:1440px;">
+	<div data-role="navbar">
+	<ul>
+	<li><a href="#">About</a></li>
+	<li><a href="#">Terms of Use</a></li>
+	<li><a href="#">My Account</a></li>
+	<li><a href="#bye" data-rel="dialog" data-transition="fade">Sign Out</a></li>
+	</ul>
+	</div>
+	</div>
+	<div class="splashscreen" style="height:200px;overflow:visible;">
+	<div>
+	<img src="images/logobanner.gif" width="1440" height="340" border="0" /><br />
+<img src="images/spectralclothes_banner.jpg" width="1440" height="232" border="0" /></div><div data-role="content" style="background-image:url(images/bubbles2.jpg);background-repeat:no-repeat;">
+	<div class="ui-grid-c" align="center">
+	<div class="ui-block-a">
+	<div class="ui-bar ui-bar-b" style="font-size:7pt;"><a href="#closetgalleries" data-transition="fade" data-type="button" data-mini="true" data-inline="true"><img src="images/toolpanel_icons/myclosetgalleries_button.png" width="75" height="75" /><br /><span class="blacklabels" style="color:#88e78e;">Closet<br />Galleries</span></a></div>
+	</div>
+	<div class="ui-block-b">
+	<div class="ui-bar ui-bar-b" style="font-size:7pt;"><a href="#" data-type="button" data-mini="true" data-inline="true"><img src="images/toolpanel_icons/mylaundrylists_button.png" width="75" height="75" /><br /><span class="blacklabels" style="color:#88e78e;">Laundry<br />Lists</span></a></div>
+	</div>
+	<div class="ui-block-c">
+	<div class="ui-bar ui-bar-b" style="font-size:7pt;"><a href="#" data-type="button" data-mini="true" data-inline="true"><img src="images/toolpanel_icons/sortedloads.png" width="75" height="75" /><br /><span class="blacklabels" style="color:#88e78e;">Sorting<br />Preferences</span></a></div>
+	</div>
+	<div class="ui-block-d">
+	<div class="ui-bar ui-bar-b" style="font-size:7pt;"><a href="#" data-type="button" data-mini="true" data-inline="true"><img src="images/toolpanel_icons/mycontacts.png" width="75" height="75" /><br /><span class="blacklabels" style="color:#88e78e;">Laundry<br />Buddies</span></a></div></div>
+	</div>
+<div data-role="collapsible" data-collapsed="true" style="opacity:0.5;font-weight:bold;color:#000000;text-effect:none;drop-shadow:none;">
+		<h4 >YOU ARE HERE</h4>
+		<p>Now that you&#39ve signed into your Home screen, the central toolbar icons will direct you to your personal places for storing and updating your ongoing information, activities and custom settings. The panels below will take you to each of the main modules of the app, which guide you through each step of washing, drying and even folding laundry from your virtual closet, in real time...using proven sorting methods, fabric care instructions and washer/dryer settings calculated for your inputted laundry loads.</p>
+	</div>
+	<div class="globallinkbars" data-role="controlgroup;">
+	<a href="#loadwizard" data-transition="flip" data-role="button" data-icon="star" style="background:#7aa8bf;color:#ffffff;font-weight:normal;">LOAD WIZARD</a>
+       <a href="#cyclemanager" data-transition="flip" data-role="button" data-icon="gear" style="background:#003957;color:#ffffff;font-weight:normal;">CYCLE MANAGER</a>	       
+	<a href="#stainremedies" data-transition="flip" data-role="button" data-icon="blog" style="background:#938c96;color:#ffffff;font-weight:normal;">STAIN REMEDIES</a>
+	 <a href="#fabricguide" data-transition="flip" data-role="button" data-icon="grid" style="background:#dd7a69;color:#ffffff;font-weight:normal;">FABRIC GUIDE</a>
+	</div></div>
+	<div data-role="footer">
+	<h6 style="font-size:9pt;">Copyright © 2013 by seven28, LLC. All rights reserved.<br />Laundri-Map and the Laundri-Map logo are registered trademarks.</h6>
+	</div>
+	</div>
+	</div>
+
+<div id="takephoto" data-role="dialog" data-title="Preview Photo">
+<div id="basebuttons" style="background-color:#ffffff;width:500px;"><h2 style="padding:15px;margin:0;color:#000000;" align="center">Preview Photo</h2>
+<img src="images/jeans.jpg" width="500" height="625" align="center" /></div>
+<a href="#addnewitem" data-rel="back" data-role="button" data-transition="pop" data-inline="true">Attach</a><a href="#" data-role="button" data-transition="pop" data-inline="true">Retake</a><a href="#addnewitem" data-rel="back" data-role="button" data-transition="pop" data-inline="true">Cancel</a></div>
+
+<div id="closetgalleries" data-role="page" data-title="Closet Galleries" style="width:1440px;">
+<div data-role="header">
+	<div data-role="navbar">
+	<ul>
+	<li><a href="#home">Home</a></li>
+	<li><a href="#">About</a></li>
+	<li><a href="#">Terms of Use</a></li>
+	<li><a href="#">My Account</a></li>
+	<li><a href="#bye" data-rel="dialog" data-transition="fade">Sign Out</a></li>
+	</ul>
+	</div>
+	</div>
+<div id="content" style="background-image:url(images/closetgalleries_background.jpg);">
+	<div data-role="content">
+<h3>CLOSET GALLERIES</h3>
+		<p>Preview stored items, update data entries, track clean/dirty laundry, or organize thumbnail photos within each section of your virtual laundry "inventory".</p></div>
+<div id="window" style="background:#50d0bf;width:1290px;margin-right:75px;margin-left:75px;">
+<div data-role="content" style="height:660px;overflow:auto;padding-top:25px;">
+<div id="listview" data-role="content" style="margin-left:10px;min-height:25px;width:460px;background-color:#d3d3d3;border:1px inset #000000;"><a href="#greenshirt" data-rel="dialog" data-transition="pop"><div align="center"><img src="images/closet.png" align="center" width="423" height="505" align="center" /></div></a></div>
+<a href="#" data-transition="none" data-role="button" data-inline="true">Find Item...</a><a href="#" data-transition="none" data-role="button" data-inline="true">Gallery Settings</a><a href="#home" data-transition="fade" data-role="button" data-inline="true">Close and Go Back</a>
+</div>
+	<div class="globallinkbars" data-role="controlgroup">
+	<a href="#loadwizard" data-transition="flip" data-role="button" data-icon="star" style="background:#7aa8bf;color:#ffffff;font-weight:normal;">LOAD WIZARD</a>
+       <a href="#cyclemanager" data-transition="flip" data-role="button" data-icon="gear" style="background:#003957;color:#ffffff;font-weight:normal;">CYCLE MANAGER</a>
+	<a href="#fabricguide" data-transition="flip" data-role="button" data-icon="grid" style="background:#dd7a69;color:#ffffff;font-weight:normal;">FABRIC GUIDE</a>
+	</div></div></div>
+	<div data-role="footer">
+	<h6 style="font-size:9pt;">Copyright © 2013 by seven28, LLC. All rights reserved.<br />Laundri-Map and the Laundri-Map logo are registered trademarks.</h6>
+	</div>
+	</div>
+
+<div id="greenshirt" data-role="dialog" data-title="Preview Item">
+<div id="basebuttons" style="background-color:#ffffff;width:500px;"><h2 style="padding:15px;margin:0;color:blue;" align="center">green_sprite_tshirt</h2>
+<img src="images/greenshirt.jpg" width="500" height="625" align="center" /></div>
+<a href="#getnewitem" data-role="button" data-transition="none" data-inline="true">Place in List</a><a href="#" data-role="button" data-transition="pop" data-inline="true">View Item Info</a><a href="#closetgalleries" data-rel="back" data-transition="pop" data-role="button" data-inline="true">Cancel Selection</a></div>
+
+<div id="getnewitem" data-role="page" data-title="Input Laundry List" style="width:1440px;">
+<div data-role="header">
+	<div data-role="navbar">
+	<ul>
+	<li><a href="#home">Home</a></li>
+	<li><a href="#">About</a></li>
+	<li><a href="#">Terms of Use</a></li>
+	<li><a href="#">My Account</a></li>
+<li><a href="#bye" data-rel="dialog" data-transition="fade">Sign Out</a></li>
+	</ul>
+	</div>
+	</div>
+<div id="content" style="background-image:url(images/loadwizard_background.jpg);background-repeat:no-repeat;">
+	<div data-role="content"><h3>LOAD WIZARD</h3>
+		<p>Please use the following menus to create, edit and sort a Laundry List for scheduled washing loads.</p></div>
+<div id="window" style="background:#50d0bf;width:1290px;margin-right:75px;margin-left:75px;">
+<div data-role="content" style="height:660px;overflow:auto;">
+<h3>Input Laundry List</h3>
+<form data-role="content" data-theme="d" style="background:#fffb93;">
+<label for="my-text-input" style="font-weight:bold;">List Name:</label>
+<input type="text" name="name" id="my-text-input" value="My List_1" />
+<a href="#newlaundryitem" data-rel="dialog" data-transition="pop" data-role="button" data-inline="true">Create New Entry</a>
+<a href="#closetgalleries" data-transition="flip" data-role="button" data-inline="true">Get Laundry From Closet Galleries...</a><a href="#createnewlist" data-role="button" data-transition="none" data-inline="true">Clear List</a>
+<div id="listview" data-role="content" style="min-height:25px;background-color:#d3d3d3;border:1px inset #000000;">
+<ul style="list-style-type:none;margin-left:10px;padding-left:0;color:blue;">
+<li style="font-weight:bold;"><a href="#"><img src="images/delete_icon.png" style="vertical-align:bottom;" /></a>&nbsp;&nbsp;old_levi_jeans</li>
+<li style="font-weight:bold;"><a href="#"><img src="images/delete_icon.png" style="vertical-align:bottom;" /></a>&nbsp;&nbsp;green_sprite_tshirt</li>
+</ul></div>
+<a href="#inputtedlist" data-transition="pop" data-role="button" data-inline="true">Save and Continue</a><a href="#importlists" data-rel="dialog" data-transition="none" data-role="button" data-inline="true">Import Saved List...</a><a href="#loadwizard" data-transition="none" data-role="button" data-inline="true">Cancel and Restart Wizard</a>
+</form>
+</div>
+	<div class="globallinkbars" data-role="controlgroup">
+       <a href="#cyclemanager" data-transition="flip" data-role="button" data-icon="gear" style="background:#003957;color:#ffffff;font-weight:normal;">CYCLE MANAGER</a>
+	<a href="#stainremedies" data-transition="flip" data-role="button" data-icon="blog" style="background:#938c96;color:#ffffff;font-weight:normal;">STAIN REMEDIES</a>
+	<a href="#fabricguide" data-transition="flip" data-role="button" data-icon="grid" style="background:#dd7a69;color:#ffffff;font-weight:normal;">FABRIC GUIDE</a>
+	</div></div></div>
+	<div data-role="footer">
+	<h6 style="font-size:9pt;">Copyright © 2013 by seven28, LLC. All rights reserved.<br />Laundri-Map and the Laundri-Map logo are registered trademarks.</h6>
+	</div>
+	</div>
+
+<div id="bye" data-role="dialog" data-title="Welcome" width="500">
+<div class="profile" align="center" style="background-color:#000000;">
+<img src="images/lmname.gif" width="500" height="162" />
+<img src="images/LM_logo_trademark.gif" width="400" height="400" align="center" />
+</div>
+<div class="globallinkbars" data-role="controlgroup">
+       <a href="#home" data-transition="fade" data-role="button" data-icon="home" style="background:#fffb93;color:#000000;font-weight:normal;">ENTER THE DEMO</a>
+<a href="laundrimap.html" target="_blank" data-transition="fade" data-role="button" data-icon="home" style="background:#88e78e;color:#000000;font-weight:normal;">ABOUT THE APP</a>
+  <a href="testing_survey.html" target="_blank" data-transition="fade" data-role="button" data-icon="star" style="background:#78a8c0;color:#000000;font-weight:normal;">SHARE YOUR FEEDBACK</a>
+	</div></div>
+</div>
+
+<div id="loadwizard" data-role="page" data-title="Load Wizard" style="width:1440px;">
+<div data-role="header">
+	<div data-role="navbar">
+	<ul>
+	<li><a href="#home">Home</a></li>
+	<li><a href="#">About</a></li>
+	<li><a href="#">Terms of Use</a></li>
+	<li><a href="#">My Account</a></li>
+	<li><a href="#bye" data-rel="dialog" data-transition="fade">Sign Out</a></li>
+	</ul>
+	</div>
+	</div>
+<div id="content" style="background-image:url(images/loadwizard_background.jpg);background-repeat:no-repeat;">
+	<div data-role="content"><h3>LOAD WIZARD</h3>
+		<p>Please use the following menus to create, edit and sort a Laundry List for scheduled washing loads.</p></div>
+<div id="window" style="background:#50d0bf;width:1290px;margin-right:75px;margin-left:75px;">
+<div data-role="content" style="height:660px;overflow:auto;">
+<h3>Input Laundry List</h3>
+<a href="#createnewlist" data-transition="none" data-role="button" data-inline="true">New List</a>
+<a href="#laundrylists" data-transition="flip" data-role="button" data-inline="true">Open Saved...</a>
+<br /><br />
+<div data-role="collapsible" data-collapsed="true" style="opacity:0.4;font-weight:bold;">
+<h4>THE BASIC STEPS TO CLEAN LAUNDRY</h4><p>...In most cases, they're not so <em>black-and-white</em>.<br /><br />Colors can bleed or fade in the wash to wreak havoc on clothes that no amount of rewashing can undo. Different patterns, prints, fabric contents and delicate garment embellishments are further complicating factors when it comes to washer load compatibility.<br /><br />While it may be easy to keep your &#34;like colors&#34; in groups, the more perplexing attributes to sort out may be &#34;lightness&#34;, &#34;brightness&#34;, and &#34;dinginess&#34; of colors. Further complicating these subjective criteria are the water temperature settings that correspond to different categories of laundry colors and fabrics.<br /><br />The Load Wizard laundry sorting engine was developed for use inside the laundry room or laundromat from your smartphone or tablet. The screens that follow will allow you to create lists of dirty laundry, with the name and snapshot of each item recorded with a simple color and fabric profile that remains stored in your Closet Galleries album. You can edit and save Laundry Lists, then just click to sort all of your scheduled items into compatible washer loads!<br /><br />The Load Wizard is programmed to select the recommended water temperature settings for each item, and to calculate separate loads for each cycle level that are grouped for compatibility of colors, product types, and fabric properties among efficiently grouped laundry items. The Sorted Loads preview window displays a collapsible table array for each scheduled load, with names and thumbnail photos of the included laundry items listed under the  heading for the advised water temperature and detergent type.<br /><br />The following interactive screens provide easy menu options and step-by-step instructions for you to clean and care for your garments more effectively, while minimizing the risks of clothing damage...with virtually no more effort or &#34;Home Ec.&#34; training required.</p></div>
+<div data-role="collapsible" data-collapsed="true" style="opacity:0.4;font-weight:bold;">
+<h4>HOW TO USE THE LOAD WIZARD</h4>
+<ol>
+<li>At the top of this screen: Compile a Laundry List showing all dirty laundry items to be sorted for washing. Click to create New List. (Or, click on the Open Saved... button to select a previously stored list).</li>
+<li>In the New Laundry List screen: Enter a List Name. Add items to the list, by clicking on Create New Entry to input and store data for profiling new laundry items. And/or browse and retrieve previous laundry item records that have been stored within your virtual closet, by clicking on the Get Laundry From Closet Galleries... button.</li>
+<li>Within the Create New Entry window: Input an Item Name, take a photo of your new laundry item from your built-in camera, and choose a gallery section of your virtual closet for saving profile information for the item.  Complete fields as possible to define textile, fabric and optional other attributes, and click on a swatch in the color palette to match the main color of the item. Then, click the Save and Add to List button to store the item data in Closet Galleries and insert into your open Laundry List.</li>
+<li>After you've entered all list items inside the New Laundry List screen, click on Save and Preview. If you still wish to add or delete items, click on the EDIT LIST button. When you are ready to sort your Laundry List contents into loads for the wash, click on the SORT LOADS button.</li>
+<li>View your Sorted Loads table in the popup window by clicking the panels to display or collapse items listed for each of the cycles and temperature levels. (Click to Close and return to the Preview Laundry List screen.)</li>
+<ol>
+</div></div>
+	<div class="globallinkbars" data-role="controlgroup">
+       <a href="#cyclemanager" data-transition="flip" data-role="button" data-icon="gear" style="background:#003957;color:#ffffff;font-weight:normal;">CYCLE MANAGER</a>
+	<a href="#stainremedies" data-transition="flip" data-role="button" data-icon="blog" style="background:#938c96;color:#ffffff;font-weight:normal;">STAIN REMEDIES</a>
+	<a href="#fabricguide" data-transition="flip" data-role="button" data-icon="grid" style="background:#dd7a69;color:#ffffff;font-weight:normal;">FABRIC GUIDE</a>
+	</div></div></div>
+	<div data-role="footer">
+	<h6 style="font-size:9pt;">Copyright © 2013 by seven28, LLC. All rights reserved.<br />Laundri-Map and the Laundri-Map logo are registered trademarks.</h6>
+	</div>
+	</div>
+
+<div id="createnewlist" data-role="page" data-title="Input Laundry List" style="width:1440px;">
+<div data-role="header">
+	<div data-role="navbar">
+	<ul>
+	<li><a href="#home">Home</a></li>
+	<li><a href="#">About</a></li>
+	<li><a href="#">Terms of Use</a></li>
+	<li><a href="#">My Account</a></li>
+	<li><a href="#bye" data-rel="dialog" data-transition="fade">Sign Out</a></li>
+	</ul>
+	</div>
+	</div>
+<div id="content" style="background-image:url(images/loadwizard_background.jpg);background-repeat:no-repeat;">
+	<div data-role="content"><h3>LOAD WIZARD</h3>
+		<p>Please use the following menus to create, edit and sort a Laundry List for scheduled washing loads.</p></div>
+<div id="window" style="background:#50d0bf;width:1290px;margin-right:75px;margin-left:75px;">
+<div data-role="content" style="height:660px;overflow:auto;">
+<h3>Input Laundry List</h3>
+<form data-role="content" data-theme="d" style="background:#fffb93;">
+<label for="my-text-input" style="font-weight:bold;">List Name:</label>
+<input type="text" name="name" id="my-text-input" value="My List_1" />
+<a href="#newlaundryitem" data-rel="dialog" data-transition="none" data-role="button" data-inline="true">Create New Entry</a>
+<a href="#closetgalleries" data-transition="flip" data-role="button" data-inline="true">Get Laundry From Closet Galleries...</a><a href="#" target="_self" data-role="button" data-inline="true" data-transition="none">Clear List</a>
+<div id="listview" data-role="content" style="min-height:25px;background-color:#d3d3d3;border:1px inset #000000;"></div>
+<a href="#inputtedlist" data-transition="pop" data-role="button" data-inline="true">Save and Continue</a><a href="#importlists" data-rel="dialog" data-transition="none" data-role="button" data-inline="true">Import Saved List...</a><a href="#loadwizard" data-transition="none" data-role="button" data-inline="true">Cancel and Restart Wizard</a>
+</form>
+</div>
+	<div class="globallinkbars" data-role="controlgroup">
+       <a href="#cyclemanager" data-transition="flip" data-role="button" data-icon="gear" style="background:#003957;color:#ffffff;font-weight:normal;">CYCLE MANAGER</a>
+	<a href="#stainremedies" data-transition="flip" data-role="button" data-icon="blog" style="background:#938c96;color:#ffffff;font-weight:normal;">STAIN REMEDIES</a>
+	<a href="#fabricguide" data-transition="flip" data-role="button" data-icon="grid" style="background:#dd7a69;color:#ffffff;font-weight:normal;">FABRIC GUIDE</a>
+	</div></div></div>
+	<div data-role="footer">
+	<h6 style="font-size:9pt;">Copyright © 2013 by seven28, LLC. All rights reserved.<br />Laundri-Map and the Laundri-Map logo are registered trademarks.</h6>
+	</div>
+	</div>
+
+<div id="addnewitem" data-role="page" data-title="Input Laundry List" style="width:1440px;">
+<div data-role="header">
+	<div data-role="navbar">
+	<ul>
+	<li><a href="#home">Home</a></li>
+	<li><a href="#">About</a></li>
+	<li><a href="#">Terms of Use</a></li>
+	<li><a href="#">My Account</a></li>
+	<li><a href="#bye" data-rel="dialog" data-transition="fade">Sign Out</a></li>
+	</ul>
+	</div>
+	</div>
+<div id="content" style="background-image:url(images/loadwizard_background.jpg);background-repeat:no-repeat;">
+	<div data-role="content"><h3>LOAD WIZARD</h3>
+		<p>Please use the following menus to create, edit and sort a Laundry List for scheduled washing loads.</p></div>
+<div id="window" style="background:#50d0bf;width:1290px;margin-right:75px;margin-left:75px;">
+<div data-role="content" style="height:660px;overflow:auto;">
+<h3>Input Laundry List</h3>
+<form data-role="content" data-theme="d" style="background:#fffb93;">
+<label for="my-text-input" style="font-weight:bold;">List Name:</label>
+<input type="text" name="name" id="my-text-input" value="My List_1" />
+<a href="#newlaundryitem" data-rel="dialog" data-transition="pop" data-role="button" data-inline="true">Create New Entry</a>
+<a href="#closetgalleries" data-transition="pop" data-role="button" data-inline="true">Get Laundry From Closet Galleries...</a><a href="#createnewlist" data-role="button" data-transition="none" data-inline="true">Clear List</a>
+<div id="listview" data-role="content" style="min-height:25px;background-color:#d3d3d3;border:1px inset #000000;">
+<ul style="list-style-type:none;margin-left:10px;padding-left:0;color:blue;">
+<li style="font-weight:bold;"><a href="#"><img src="images/delete_icon.png" style="vertical-align:bottom;" /></a>&nbsp;&nbsp;old_levi_jeans</li>
+</ul></div>
+<a href="#inputtedlist" data-transition="pop" data-role="button" data-inline="true">Save and Continue</a><a href="#importlists" data-rel="dialog" data-transition="none" data-role="button" data-inline="true">Import Saved List...</a><a href="#loadwizard" data-transition="none" data-role="button" data-inline="true">Cancel and Restart Wizard</a>
+</form>
+</div>
+	<div class="globallinkbars" data-role="controlgroup">
+       <a href="#cyclemanager" data-transition="flip" data-role="button" data-icon="gear" style="background:#003957;color:#ffffff;font-weight:normal;">CYCLE MANAGER</a>
+	<a href="#stainremedies" data-transition="flip" data-role="button" data-icon="blog" style="background:#938c96;color:#ffffff;font-weight:normal;">STAIN REMEDIES</a>
+	<a href="#fabricguide" data-transition="flip" data-role="button" data-icon="grid" style="background:#dd7a69;color:#ffffff;font-weight:normal;">FABRIC GUIDE</a>
+	</div></div></div>
+	<div data-role="footer">
+	<h6 style="font-size:9pt;">Copyright © 2013 by seven28, LLC. All rights reserved.<br />Laundri-Map and the Laundri-Map logo are registered trademarks.</h6>
+	</div>
+	</div>
+
+<div id="newlaundryitem" data-role="dialog" data-title="New Laundry Item">
+<div class="profile" data-role="content" style="background-color:#ffffff;">
+<div class="ui-grid-a">
+	<div class="ui-block-a" align="left" style="padding-top:0px;margin-top:0px;text-align:left;">
+	<label for="itemname"><h2 align="center">Item Name:</h2></label>
+<input type="text" name="itemname" id="itemname">
+<a href="#takephoto" data-rel="dialog" data-transition="flip" data-role="button" style="text-decoration:none;"><img src="images/photo1.png" width="50" height="35" style="vertical-align:bottom;" />&nbsp;&nbsp;<span class="takephoto" style="color:blue;">Take Photo</span></a>
+<label for="select-gallery"><h2>Save To Gallery:</h2></label>
+<select name="select-gallery" id="select-gallery">
+<option value="pleaseselect"></option>
+<option value="fronthallcloset">Front Hall Closet</option>
+<option value="bedroomcloset">Bedroom Closet</option>
+<option value="linencloset">Linen Closet</option>
+<option value="tempmisccloset">Temp./Miscellaneous Closet</option>
+</select>
+<label for="rad"><h2>Textile Type:</h2></label>
+    <select id="drop" data-native-value="false">
+	<option value="Please" id="11"></option>
+<optgroup label="Apparel">Apparel</label>
+        <option value="Coat" id="1">Coat/Jacket/Blazer/Vest</option>
+        <option value="Dress" id="2">Dress/Skirt</option>
+        <option value="Dresshirt" id="3">Dress shirt</option>
+	<option value="Pants" id="3">Pants</option>
+	<option value="Shorts" id="4">Shorts</option>
+	<option value="Socks" id="5">Socks</option>
+	<option value="Sweater" id="6">Sweater</option>
+	<option value="Sweatshirt" id="7">Sweatshirt</option>
+	<option value="Tshirt" id="8">T-shirt</option>
+	<option value="Underwear" id="9">Underwear/Lingerie</option>
+	<option value="casclothes" id="14">Other apparel: Casual</option>
+	<option value="delclothes" id="14">Other apparel: Delicate</option>
+<optgroup label="Linens/Accessories">Linens/Non-apparel</label>
+        <option value="Bedlinen" id="10">Bed linen</option>
+        <option value="Rug" id="12">Rug/Carpet/Floor mat</option>
+        <option value="Towel" id="13">Towel/Bath mat</option>
+	<option value="caslinen" id="16">Other linens/accessories: Casual</option>
+	<option value="dellinen" id="17">Other linens/accessories: Delicate</option>
+    </select>
+<label for="select-fabric"><h2>Main Fabric(s):</h2></label>
+<select name="select-fabric" id="select-fabric">
+<option value="pleaseselect"></option>
+<option value="acrylic">Acrylic</option>
+<option value="cotton">Cotton</option>
+<option value="linen">Linen</option>
+<option value="nylon">Nylon</option>
+<option value="polyester">Polyester</option>
+<option value="rayon">Rayon</option>
+<option value="silk">Silk</option>
+<option value="spandex">Spandex</option>
+<option value="wool">Wool</option>
+<option value="wool">(Other/Unknown)</option>	
+</select>
+<select name="select-fabric" id="select-fabric">
+<option value="pleaseselect"></option>
+<option value="acrylic">Acrylic</option>
+<option value="cotton">Cotton</option>
+<option value="linen">Linen</option>
+<option value="nylon">Nylon</option>
+<option value="polyester">Polyester</option>
+<option value="rayon">Rayon</option>
+<option value="silk">Silk</option>
+<option value="spandex">Spandex</option>
+<option value="wool">Wool</option>
+<option value="wool">(Other/Unknown)</option>	
+</select>
+</div>
+<div class="ui-block-b"><form>
+<div><div id="wColorPicker1" class="hoverBox">
+<input id="wColorPicker_input1" type="text"/>
+</div><br />
+<script type="text/javascript">
+$("#wColorPicker1").wColorPicker({
+initColor: '--(Select Item Color)--',
+onSelect: function(color){
+$("#wColorPicker_input1").css('background', color).val(color);
+},
+onMouseover: function(color){
+$("#wColorPicker_input1").css('background', color).val(color);
+},
+onMouseout: function(color){
+$("#wColorPicker_input1").css('background', color).val(color);
+}
+});
+
+$("#wColorPicker2").wColorPicker({onSelect:function(color){/*do something*/}, mode: 'hover', effect: 'none', theme: 'white'});
+
+$("#wColorPicker3").wColorPicker({onSelect:function(color){/*do something*/}, mode: 'hover', effect: 'fade', theme: 'cream'});
+
+$("#wColorPicker4").wColorPicker({onSelect:function(color){/*do something*/}, mode: 'hover', effect: 'slide', theme: 'red'});
+
+$("#wColorPicker5").wColorPicker({onSelect:function(color){/*do something*/}, mode: 'hover', effect: 'slide', theme: 'green'});
+
+$("#wColorPicker6").wColorPicker({onSelect:function(color){/*do something*/}, mode: 'click', effect: 'none', theme: 'blue'});
+
+$("#wColorPicker7").wColorPicker({onSelect:function(color){/*do something*/}, mode: 'click', effect: 'fade', theme: 'yellow'});
+
+$("#wColorPicker8").wColorPicker({onSelect:function(color){/*do something*/}, mode: 'click', effect: 'slide', theme: 'orange'});
+
+$("#wColorPicker9").wColorPicker({onSelect:function(color){/*do something*/}, mode: 'click', effect: 'slide', theme: 'plum'});
+</script>
+<script type="text/javascript">
+console.log($('.hoverBox').wColorPicker('mode'));
+</script></div>
+<fieldset>
+<h2 align="center"><span class="text-align:center;">Decoration:</span></h2>
+<input type="checkbox" name="checkbox-0" id="checkbox-mini-0" class="custom" data-mini="true" />
+<label for="checkbox-mini-0">Multi-color pattern</label>
+<input type="checkbox" name="checkbox-1" id="checkbox-mini-1" class="custom" data-mini="true" />
+<label for="checkbox-mini-1">Embroidery/Sequins</label></fieldset>
+<div align="center">
+<a href="#" data-transition="flip" data-role="button" data-inline="true" align="center" style="background:#ff0000;color:#ffffff;font-weight:normal;border:0;-webkit-box-shadow: inset 0 5px 8px rgba(0, 0, 0, 0.6);-moz-box-shadow:inset 0 5px 8px rgba(0, 0, 0, 0.6);box-shadow: inset 0 5px 8px rgba(0, 0, 0, 0.6);">ADD CARE<br />TAG RULES</a></div>
+</div></div></form></div>
+<div id="basebuttons" style="background-color:#000000;"><a href="#addnewitem" data-role="button" data-transition="pop" data-inline="true">Save and Add to List</a><a href="#createnewlist" data-rel="back" data-transition="pop" data-role="button" data-inline="true">Cancel</a></div>
+</div>
+
+<div id="inputtedlist" data-role="page" data-title="Preview Laundry List" style="width:1440px;">
+<div data-role="header">
+	<div data-role="navbar">
+	<ul>
+	<li><a href="#home">Home</a></li>
+	<li><a href="#">About</a></li>
+	<li><a href="#">Terms of Use</a></li>
+	<li><a href="#">My Account</a></li>
+	<li><a href="#bye" data-rel="dialog" data-transition="fade">Sign Out</a></li>
+	</ul>
+	</div>
+	</div>
+<div id="content" style="background-image:url(images/loadwizard_background.jpg);background-repeat:no-repeat;">
+	<div data-role="content"><h3>LOAD WIZARD</h3>
+		<p>Please use the following menus to create, edit and sort a Laundry List for scheduled washing loads.</p></div>
+<div id="window" style="background:#50d0bf;width:1290px;margin-right:75px;margin-left:75px;">
+<div data-role="content" style="height:660px;overflow:auto;">
+<h3>Preview Laundry List</h3>
+<div id="listsaved" data-role="content" style="min-height:75px;background-color:#fffb93;">
+<p style="font-weight:bold;color:blue;text-decoration:underline;">My List_1</p>
+<div id="listinput" data-role="content" style="min-height:25px;background-color:#d3d3d3;border:1px inset #000000;">
+<ul style="margin-left:30px;padding-left:0;color:blue;list-style-image:url(images/bullet.png);">
+<li style="font-weight:bold;">old_levi_jeans</li>
+<li style="font-weight:bold;">green_sprite_tshirt</li>
+<li style="font-weight:bold;">fuzzy_hoodie</li>
+<li style="font-weight:bold;">couch_blanket</li>
+<li style="font-weight:bold;">kaitlyn_wintercoat</li>
+<li style="font-weight:bold;">brown_bathtowel</li>
+</ul>
+</div>
+<div id="proceedpanel">
+<a href="#sorted" data-rel="dialog" data-transition="pop" data-role="button" data-inline="true" style="background:#ff0000;color:#ffffff;font-weight:normal;border:0;-webkit-box-shadow: inset 0 5px 8px rgba(0, 0, 0, 0.6);-moz-box-shadow:inset 0 5px 8px rgba(0, 0, 0, 0.6);box-shadow: inset 0 5px 8px rgba(0, 0, 0, 0.6);">SORT LOADS</a>
+<a href="#editnewlist" data-transition="none" data-direction="reverse" data-role="button" data-inline="true" style="background:#ff0000;color:#ffffff;font-weight:normal;border:0;-webkit-box-shadow: inset 0 5px 8px rgba(0, 0, 0, 0.6);-moz-box-shadow:inset 0 5px 8px rgba(0, 0, 0, 0.6);box-shadow: inset 0 5px 8px rgba(0, 0, 0, 0.6);">EDIT LIST</a>
+</div>
+</div>
+<a href="#loadwizard" data-transition="none" data-role="button" data-inline="true">Cancel and Restart Wizard</a>
+</div>
+	<div class="globallinkbars" data-role="controlgroup">
+       <a href="#cyclemanager" data-transition="flip" data-role="button" data-icon="gear" style="background:#003957;color:#ffffff;font-weight:normal;">CYCLE MANAGER</a>
+	<a href="#stainremedies" data-transition="flip" data-role="button" data-icon="blog" style="background:#938c96;color:#ffffff;font-weight:normal;">STAIN REMEDIES</a>
+	<a href="#fabricguide" data-transition="flip" data-role="button" data-icon="grid" style="background:#dd7a69;color:#ffffff;font-weight:normal;">FABRIC GUIDE</a>
+	</div></div></div>
+	<div data-role="footer">
+	<h6 style="font-size:9pt;">Copyright © 2013 by seven28, LLC. All rights reserved.<br />Laundri-Map and the Laundri-Map logo are registered trademarks.</h6>
+	</div>
+	</div>
+
+<div id="sorted" data-role="dialog" data-title="Sorted Load Info">
+<div class="profile" data-role="content" style="background-color:#ffffff;">
+<h2>Sorted Load Info - [My List_1]</h2>
+<form data-role="content" data-theme="d" style="background:#fffb93;">
+<div id="listview" data-role="content" style="min-height:25px;background-color:#d3d3d3;border:1px inset #000000;">
+<div data-role="collapsible" data-collapsed="true" style="opacity:1;">
+<h4 >Machine Wash: HOT<br />Liquid or Powdered Bleach</h4>
+<ul style="list-style-image:url(images/bullet.png);margin-left:10px;padding-left:0;">
+<li style="margin-bottom:2px;"><a href="#" style="font-color:blue;text-decoration:none;"font-weight:bold;"><img src="images/fabricguide_swatches/avatar1.png" width="50" height="50" style="vertical-align:bottom;border:1px #000000 solid;" />&nbsp;&nbsp;couch_blanket</a></li>
+</ul>
+</div>
+<div data-role="collapsible" data-collapsed="true" style="opacity:1;">
+<h4 >Machine Wash: WARM<br />Color-Safe Detergent</h4>
+<ul style="list-style-image:url(images/bullet.png);margin-left:10px;padding-left:0;">
+<li style="margin-bottom:2px;"><a href="#" style="font-color:blue;text-decoration:none;"font-weight:bold;"><img src="images/fabricguide_swatches/avatar3.png" width="50" height="50" style="vertical-align:bottom;border:1px #000000 solid;" />&nbsp;&nbsp;fuzzy_hoodie</a></li>
+<li style="margin-bottom:2px;"><a href="#" style="font-color:blue;text-decoration:none;"font-weight:bold;"><img src="images/fabricguide_swatches/avatar6.png" width="50" height="50" style="vertical-align:bottom;border:1px #000000 solid;" />&nbsp;&nbsp;brown_bathtowel</a></li>
+</ul>
+</div>
+<div data-role="collapsible" data-collapsed="true" style="opacity:1;">
+<h4 >Machine Wash: COLD<br />Color-Safe Detergent</h4>
+<ul style="list-style-image:url(images/bullet.png);margin-left:10px;padding-left:0;">
+<li style="margin-bottom:2px;"><a href="#" style="font-color:blue;text-decoration:none;"font-weight:bold;"><img src="images/fabricguide_swatches/avatar4.png" width="50" height="50" style="vertical-align:bottom;border:1px #000000 solid;" />&nbsp;&nbsp;old_levi_jeans</a></li>
+<li style="margin-bottom:2px;"><a href="#" style="font-color:blue;text-decoration:none;"font-weight:bold;"><img src="images/fabricguide_swatches/avatar5.png" width="50" height="50" style="vertical-align:bottom;border:1px #000000 solid;" />&nbsp;&nbsp;green_sprite_tshirt</a></li>
+</ul>
+</div>
+<div data-role="collapsible" data-collapsed="true" style="opacity:1;">
+<h4 >Machine Wash: COLD<br />Color-Safe Detergent</h4>
+<ul style="list-style-image:url(images/bullet.png);margin-left:10px;padding-left:0;">
+<li style="margin-bottom:2px;"><a href="#" style="font-color:blue;text-decoration:none;"font-weight:bold;"><img src="images/fabricguide_swatches/avatar2.png" width="50" height="50" style="vertical-align:bottom;border:1px #000000 solid;" />&nbsp;&nbsp;kaitlyn_wintercoat</a></li>
+</ul>
+</div>
+</div><br /></form>
+</div>
+<div id="basebuttons" style="background-color:#000000;"><a href="inputtedlist" data-rel="back" data-transition="flip" data-role="button" data-inline="true">Close</a></div>
+</div>
+
+<div id="editnewlist" data-role="page" data-title="Input Laundry List" style="width:1440px;">
+<div data-role="header">
+	<div data-role="navbar">
+	<ul>
+	<li><a href="#home">Home</a></li>
+	<li><a href="#">About</a></li>
+	<li><a href="#">Terms of Use</a></li>
+	<li><a href="#">My Account</a></li>
+	<li><a href="#bye" data-rel="dialog" data-transition="fade">Sign Out</a></li>
+	</ul>
+	</div>
+	</div>
+<div id="content" style="background-image:url(images/loadwizard_background.jpg);background-repeat:no-repeat;">
+	<div data-role="content"><h3>LOAD WIZARD</h3>
+		<p>Please use the following menus to create, edit and sort a Laundry List for scheduled washing loads.</p></div>
+<div id="window" style="background:#50d0bf;width:1290px;margin-right:75px;margin-left:75px;">
+<div data-role="content" style="height:660px;overflow:auto;">
+<h3>Input Laundry List</h3>
+<form data-role="content" data-theme="d" style="background:#fffb93;">
+<label for="my-text-input" style="font-weight:bold;">List Name:</label>
+<input type="text" name="name" id="my-text-input" value="My List_1" />
+<a href="#newlaundryitem" data-rel="dialog" data-transition="pop" data-role="button" data-inline="true">Create New Entry</a>
+<a href="#closetgalleries" data-transition="flip" data-role="button" data-inline="true">Get Laundry From Closet Galleries...</a><a href="#createnewlist" data-role="button" data-transition="none" data-inline="true">Clear List</a>
+<div id="listview" data-role="content" style="min-height:25px;background-color:#d3d3d3;border:1px inset #000000;">
+<ul style="list-style-type:none;margin-left:10px;padding-left:0;color:blue;">
+<li style="font-weight:bold;"><a href="#"><img src="images/delete_icon.png" style="vertical-align:bottom;" /></a>&nbsp;&nbsp;old_levi_jeans</li>
+<li style="font-weight:bold;"><a href="#"><img src="images/delete_icon.png" style="vertical-align:bottom;" /></a>&nbsp;&nbsp;green_sprite_tshirt</li>
+<li style="font-weight:bold;"><a href="#"><img src="images/delete_icon.png" style="vertical-align:bottom;" /></a>&nbsp;&nbsp;fuzzy_hoodie</li>
+<li style="font-weight:bold;"><a href="#"><a href="#"><img src="images/delete_icon.png" style="vertical-align:bottom;" /></a>&nbsp;&nbsp;couch_blanket</li>
+<li style="font-weight:bold;"><a href="#"><img src="images/delete_icon.png" style="vertical-align:bottom;" /></a>&nbsp;&nbsp;kaitlyn_wintercoat</li>
+<li style="font-weight:bold;"><a href="#"><a href="#"><img src="images/delete_icon.png" style="vertical-align:bottom;" /></a>&nbsp;&nbsp;brown_bathtowel</li>
+</ul></div>
+<a href="#inputtedlist" data-transition="pop" data-role="button" data-inline="true">Save and Continue</a><a href="#importlists" data-rel="dialog" data-transition="none" data-role="button" data-inline="true">Import Saved List...</a><a href="#loadwizard" data-transition="none" data-role="button" data-inline="true">Cancel and Restart Wizard</a>
+</form>
+</div>
+	<div class="globallinkbars" data-role="controlgroup">
+       <a href="#cyclemanager" data-transition="flip" data-role="button" data-icon="gear" style="background:#003957;color:#ffffff;font-weight:normal;">CYCLE MANAGER</a>
+	<a href="#stainremedies" data-transition="flip" data-role="button" data-icon="blog" style="background:#938c96;color:#ffffff;font-weight:normal;">STAIN REMEDIES</a>
+	<a href="#fabricguide" data-transition="flip" data-role="button" data-icon="grid" style="background:#dd7a69;color:#ffffff;font-weight:normal;">FABRIC GUIDE</a>
+	</div></div></div>
+	<div data-role="footer">
+	<h6 style="font-size:9pt;">Copyright © 2013 by seven28, LLC. All rights reserved.<br />Laundri-Map and the Laundri-Map logo are registered trademarks.</h6>
+	</div>
+	</div>
+
+<div id="cyclemanager" data-role="page" data-title="Cycle Manager" style="width:1440px;">
+<div data-role="header">
+	<div data-role="navbar">
+	<ul>
+	<li><a href="#home">Home</a></li>
+	<li><a href="#">About</a></li>
+	<li><a href="#">Terms of Use</a></li>
+	<li><a href="#">My Account</a></li>
+	<li><a href="#bye" data-rel="dialog" data-transition="fade">Sign Out</a></li>
+	</ul>
+	</div>
+	</div>
+<div id="content" style="background-image:url(images/cyclemanager_background.jpg);background-repeat:no-repeat;">
+	<div data-role="content"><h3>CYCLE MANAGER</h3>
+	<p>Use the tools and options below to coordinate, run and track your Sorted Loads as you wash, dry and recollect laundry items.</p>
+</div>
+<div id="window" style="background:#50d0bf;width:1290px;margin-right:75px;margin-left:75px;">
+<div data-role="content" style="height:660px;overflow:auto;">
+	<h3>Cycle Utilities</h3>
+	<div id="utilities">
+	<div class="ui-grid-d" align="center" data-role="content">
+	<div class="ui-block-a">
+	<div class="ui-bar ui-bar-b" style="font-size:7pt;">
+<a href="#" data-type="button" data-inline="true"><img src="images/toolpanel_icons/cm_1.png" width="110" height="100" /><br /><span class="blacklabels" style="color:#88e78e;">Dryer Load<br />Companion</span></a>
+</div></div>
+	<div class="ui-block-b">
+	<div class="ui-bar ui-bar-b" style="font-size:7pt;">
+<a href="#" data-type="button" data-inline="true"><img src="images/toolpanel_icons/cm_2.png" width="110" height="100" /><br /><span class="blacklabels" style="color:#88e78e;">Smart Cycle<br />Timer</span></a>
+</div></div>
+	<div class="ui-block-c">
+	<div class="ui-bar ui-bar-b" style="font-size:7pt;">
+<a href="#" data-type="button" data-inline="true"><img src="images/toolpanel_icons/cm_3.png" width="110" height="100" /><br /><span class="blacklabels" style="color:#88e78e;">Detergent<br />Measurer</span></a>
+</div></div>
+	<div class="ui-block-a">
+	<div class="ui-bar ui-bar-b" style="font-size:7pt;">
+<a href="#" data-type="button" data-inline="true"><img src="images/toolpanel_icons/cm_4.png" width="110" height="100" /><br /><span class="blacklabels" style="color:#88e78e;">Clean Clothes<br />Tracker</span></a>
+</div></div>
+<div class="ui-block-b">
+	<div class="ui-bar ui-bar-b" style="font-size:7pt;">
+<a href="#" data-type="button" data-inline="true"><img src="images/toolpanel_icons/cm_5.png" width="110" height="100" /><br /><span class="blacklabels" style="color:#88e78e;">Buddy Group<br />Messages</span></a>
+</div></div>
+	<div class="ui-block-c">
+	<div class="ui-bar ui-bar-b" style="font-size:7pt;">
+<a href="#" data-type="button" data-inline="true"><img src="images/toolpanel_icons/cm_6.png" width="110" height="100" /><br /><span class="blacklabels" style="color:#88e78e;">Fold<br />Guide</span></a>
+</div></div>
+</div></div>
+	<h3>Laundry Care Instructions</h3>
+	<a href="#" data-role="button" data-inline="true">Look Up Tag Symbols</a>
+<a href="#" data-role="button" data-inline="true">Show Machine Settings Info</a>
+	</div>
+	<div class="globallinkbars" data-role="controlgroup">
+      <a href="#loadwizard" data-transition="flip" data-role="button" data-icon="star" style="background:#7aa8bf;color:#ffffff;font-weight:normal;">LOAD WIZARD</a>
+	<a href="#stainremedies" data-transition="flip" data-role="button" data-icon="blog" style="background:#938c96;color:#ffffff;font-weight:normal;">STAIN REMEDIES</a>
+	<a href="#fabricguide" data-transition="flip" data-role="button" data-icon="grid" style="background:#dd7a69;color:#ffffff;font-weight:normal;">FABRIC GUIDE</a>
+	</div></div></div>
+	<div data-role="footer">
+	<h6 style="font-size:9pt;">Copyright © 2013 by seven28, LLC. All rights reserved.<br />Laundri-Map and the Laundri-Map logo are registered trademarks.</h6>
+	</div>
+	</div>
+
+<div id="stainremedies" data-role="page" data-title="Stain Remedies" style="width:1440px;">
+<div data-role="header">
+	<div data-role="navbar">
+	<ul>
+	<li><a href="#home">Home</a></li>
+	<li><a href="#">About</a></li>
+	<li><a href="#">Terms of Use</a></li>
+	<li><a href="#">My Account</a></li>
+	<li><a href="#bye" data-rel="dialog" data-transition="fade">Sign Out</a></li>
+	</ul>
+	</div>
+	</div>
+<div id="content" style="background-image:url(images/stainremedies_background.jpg);">
+	<div data-role="content">
+<h3>STAIN REMEDIES</h3>
+		<p>Find tried and true solutions for spot removal using common household ingredients to treat each of the stains listed below each remedy. Click on an entry to view instructions and tips.</p></div>
+<div id="window" style="background:#50d0bf;width:1290px;margin-right:75px;margin-left:75px;">
+<div data-role="content" style="height:660px;overflow:auto;">
+<h3>Homemade Stain Removers</h3>
+<a href="#" data-transition="flip" data-role="button" data-icon="star" style="background:#7aa8bf;color:#ffffff;font-weight:normal;">Cornmeal</a>
+<br />
+<h4><img src="images/stains/grease.gif" width="75" height="75" />Grease</h4>
+<br />
+<a href="#" data-transition="flip" data-role="button" data-icon="star" style="background:#7aa8bf;color:#ffffff;font-weight:normal;">Hydrogen Peroxide</a>
+<br /><h4><img src="images/stains/blood.gif" width="75" height="75" />Blood&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/stains/mildew.gif" width="75" height="75" />Mildew&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/stains/milk.gif" width="75" height="75" />Milk</h4><br />
+<a href="#" data-transition="flip" data-role="button" data-icon="star" style="background:#7aa8bf;color:#ffffff;font-weight:normal;">Lemon Juice</a>
+<br /><h4 style="margin-bottom:75px;"><img src="images/stains/fruitjuice.gif" width="75" height="75" />Fruit Juice&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/stains/food.gif" width="75" height="75" />Food&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/stains/ink.gif" width="75" height="75" />Ink&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="images/stains/rust.gif" width="75" height="75" />Rust</h4>
+</div>
+<div class="globallinkbars" data-role="controlgroup">
+	<a href="#loadwizard" data-transition="flip" data-role="button" data-icon="star" style="background:#7aa8bf;color:#ffffff;font-weight:normal;">LOAD WIZARD</a>
+       <a href="#cyclemanager" data-transition="flip" data-role="button" data-icon="gear" style="background:#003957;color:#ffffff;font-weight:normal;">CYCLE MANAGER</a>
+	<a href="#fabricguide" data-transition="flip" data-role="button" data-icon="grid" style="background:#dd7a69;color:#ffffff;font-weight:normal;">FABRIC GUIDE</a>
+	</div></div></div>
+	<div data-role="footer">
+	<h6 style="font-size:9pt;">Copyright © 2013 by seven28, LLC. All rights reserved.<br />Laundri-Map and the Laundri-Map logo are registered trademarks.</h6>
+	</div>
+	</div>
+
+<div id="fabricguide" data-role="page" data-title="Fabric Guide" style="width:1440px;">
+<div data-role="header">
+	<div data-role="navbar">
+	<ul>
+	<li><a href="#home">Home</a></li>
+	<li><a href="#">About</a></li>
+	<li><a href="#">Terms of Use</a></li>
+	<li><a href="#">My Account</a></li>
+	<li><a href="#bye" data-rel="dialog" data-transition="fade">Sign Out</a></li>
+	</ul>
+	</div>
+	</div>
+<div id="content" style="background-image:url(images/fbguide.jpg);">
+	<div data-role="content"><h3>FABRIC GUIDE</h3>
+		<p>Wondering which of the basic fabric type(s) your unlabeled garments or linens mainly contain?</p>
+</div>
+<div id="window" style="background:#50d0bf;width:1290px;margin-right:75px;margin-left:75px;">
+<div data-role="content" style="height:660px;overflow:auto;">
+<p style="font-weight:bold;">Examine the weave pattern and fibers in your textile items, then browse the image links below to find  any closely matching fabric swatches. <br />Click to display an enlarged image and category name for each, along with a brief description of the identifying characteristics commonly found in each material.</p>
+<div id="listsaved" data-role="content" style="min-height:75px;background-color:#fffb93;">
+<div id="cluster" data-role="navbar" style="padding-left:50px;padding-right:50px;padding-top:0px;"><div align="left">
+<a href="#"><img src="images/fabricguide_swatches/cotton.png" width="125" height="125" border="1" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><img src="images/fabricguide_swatches/nylon.png" width="125" height="125" border="1" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><img src="images/fabricguide_swatches/polyester.png" width="125" height="125" border="1" /></a><br /><br /><a href="#"><img src="images/fabricguide_swatches/wool.png" width="125" height="125" border="1" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><img src="images/fabricguide_swatches/acrylic.png" width="125" height="125" border="1" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><img src="images/fabricguide_swatches/silk.png" width="125" height="125" border="1" /></a><br /><br /><a href="#"><img src="images/fabricguide_swatches/terrycloth.png" width="125" height="125" border="1" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><img src="images/fabricguide_swatches/denim.png" width="125" height="125" border="1" /></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><img src="images/fabricguide_swatches/velour.png" width="125" height="125" border="1" /></a></div></div>
+</div>
+</div>
+	<div class="globallinkbars" data-role="controlgroup">
+	<a href="#loadwizard" data-transition="flip" data-role="button" data-icon="star" style="background:#7aa8bf;color:#ffffff;font-weight:normal;">LOAD WIZARD</a>
+       <a href="#cyclemanager" data-transition="flip" data-role="button" data-icon="gear" style="background:#003957;color:#ffffff;font-weight:normal;">CYCLE MANAGER</a>
+	<a href="#stainremedies" data-transition="flip" data-role="button" data-icon="blog" style="background:#938c96;color:#ffffff;font-weight:normal;">STAIN REMEDIES</a>
+	</div></div></div>
+	<div data-role="footer">
+	<h6 style="font-size:9pt;">Copyright © 2013 by seven28, LLC. All rights reserved.<br />Laundri-Map and the Laundri-Map logo are registered trademarks.</h6>
+	</div>
+	</div>
+
+<div id="importlists" data-role="dialog" data-title="Import Laundry List">
+<div class="profile" data-role="content" style="background-color:#ffffff;">
+<h2>Import Laundry List</h2>
+<form data-role="content" data-theme="d" style="background:#fffb93;">
+<div id="listview" data-role="content" style="min-height:25px;background-color:#d3d3d3;border:1px inset #000000;">
+<input type="checkbox" name="newsweater"><label for="">roommates stuff</label>
+</form>
+</div>
+<div id="basebuttons" style="background-color:#000000;"><a href="#editnewlist" data-transition="none" data-role="button" data-inline="true">Select</a><a href="#getnewitem" data-rel="back" data-transition="flip" data-role="button" data-inline="true">Cancel</a></div>
+</div>
+</div><br /></form>
+</div>
+<div id="basebuttons" style="background-color:#000000;"><a href="inputtedlist" data-rel="back" data-transition="flip" data-role="button" data-inline="true">Close</a></div>
+</div>
+
+<div id="survey" data-role="dialog" data-title="Share Feedback">
+<div class="profile" data-role="content" style="background-color:#ffffff;">
+<h2>We Value Your Feedback!</h2>
+  <p>Please tell us briefly about your experience, along with any suggestions for improvement, following your trial use of the Laundri-Map demo app. (The asterisk indicates a required information field; all other fields are optional.)</p>
+<form name="htmlform" method="post" action="html_form_send.php">
+  <div align="center">
+    <table width="450px">
+      </tr>
+      <tr>
+        <td valign="top">
+          <label for="first_name">First Name</label>
+          </td>
+        <td valign="top">
+          <input  type="text" name="first_name" maxlength="50" size="30">
+          </td>
+        </tr>
+      <tr>
+        <td valign="top"">
+          <label for="last_name">Last Name</label>
+          </td>
+        <td valign="top">
+          <input  type="text" name="last_name" maxlength="50" size="30">
+          </td>
+        </tr>
+      <tr>
+        <td valign="top">
+          <label for="email">Email*</label>
+          </td>
+        <td valign="top">
+          <input  type="text" name="email" maxlength="80" size="30">
+          </td>
+        <tr>
+          <td valign="top">
+            <label for="comments">Comments*</label></td>
+          <td valign="top">
+            <textarea  name="comments" maxlength="10000" cols="25" rows="20"></textarea>
+            </td>
+          </tr>
+      <tr>
+        <td colspan="2" style="text-align:center">
+          <input type="submit" value="Submit"><input type="reset" value="Reset" />
+          </td>
+        </tr>
+    </table>
+  </div>
+</form>
+</div>
+<div id="basebuttons" style="background-color:#000000;"><a href="#signin" data-rel="dialog" data-transition="flip" data-role="button" data-inline="true">Cancel</a></div>
+</div>
+
+<div id="laundrylists" data-role="page" data-title="Laundry Lists" style="width:1440px;">
+</div>
+
+<div id="foldguides" data-role="page" data-title="Fold Guides" style="width:1440px;">
+
+<div id="roommatealerts" data-role="page" data-title="Roommate Alerts" style="width:1440px;">
+
+<div id="about" data-role="page" data-title="About" style="width:1440px;">
+</div>
+
+<div id="termsofuse" data-role="page" data-title="Terms of Use" style="width:1440px;">
+</div>
+
+<div id="myaccount" data-role="page" data-title="My Account" style="width:1440px;">
+</div>
+
+<div id="welcome" data-role="page" data-title="Welcome" style="width:1440px;">
+</div>
+
+</body>
+</html>
